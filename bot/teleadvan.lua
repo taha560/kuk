@@ -343,133 +343,83 @@ This command will send text to [group_id]
 *Only admins and sudo can use res, setowner, commands
 ]],
     help_text = [[
-Commands list :
-
-!kick [username|id]
-You can also do it by reply
-
-!ban [ username|id]
-You can also do it by reply
-
-!unban [id]
-You can also do it by reply
-
-!who
-Members list
-
-!modlist
-Moderators list
-
-!promote [username]
-Promote someone
-
-!demote [username]
-Demote someone
-
-!kickme
-Will kick user
-
-!about
-Group description
-
-!setphoto
-Set and locks group photo
-
-!setname [name]
-Set group name
-
-!rules
-Group rules
-
-!id
-return group id or user id
-
-!help
-Returns help text
-
-!lock [links|flood|spam|Arabic|member|rtl|sticker|contacts|strict]
-Lock group settings
-*rtl: Kick user if Right To Left Char. is in name*
-
-!unlock [links|flood|spam|Arabic|member|rtl|sticker|contacts|strict]
-Unlock group settings
-*rtl: Kick user if Right To Left Char. is in name*
-
-!mute [all|audio|gifs|photo|video]
-mute group message types
-*If "muted" message type: user is kicked if message type is posted 
-
-!unmute [all|audio|gifs|photo|video]
-Unmute group message types
-*If "unmuted" message type: user is not kicked if message type is posted 
-
-!set rules <text>
-Set <text> as rules
-
-!set about <text>
-Set <text> as about
-
-!settings
-Returns group settings
-
-!muteslist
-Returns mutes for chat
-
-!muteuser [username]
-Mute a user in chat
-*user is kicked if they talk
-*only owners can mute | mods and owners can unmute
-
-!mutelist
-Returns list of muted users in chat
-
-!newlink
-create/revoke your group link
-
-!link
-returns group link
-
-!owner
-returns group owner id
-
-!setowner [id]
-Will set id as owner
-
-!setflood [value]
-Set [value] as flood sensitivity
-
-!stats
-Simple message statistics
-
-!save [value] <text>
-Save <text> as [value]
-
-!get [value]
-Returns text of [value]
-
-!clean [modlist|rules|about]
-Will clear [modlist|rules|about] and set it to nil
-
-!res [username]
-returns user id
-"!res @username"
-
-!log
-Returns group logs
-
-!banlist
-will return group ban list
-
-**You can use "#", "!", or "/" to begin all commands
-
-
-*Only owner and mods can add bots in group
-
-
-*Only moderators and owner can use kick,ban,unban,newlink,link,setphoto,setname,lock,unlock,set rules,set about and settings commands
-
-*Only owner can use res,setowner,promote,demote and log commands
-
+🚷 بن [آیدی.ڪد.ریپلای]
+تحریم ڪردن شخص از گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🚫 اخراج [آیدی.ریپلای]
+حذف ڪردن شخص موردنظر
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+💳 اطلاعات
+نشان دادن اطلاعات شخص موردنظر
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+📋 لیست بن
+لیست افراد تحریم شده
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🔨 حذف بن [آیدی.ڪد]
+شڪستن تحریم شخص موردنظر
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🛂 قوانین / توضیحات
+مشاهده قوانین یا توضیحات گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🌅 تنظیم [عکس/نام]
+تغییر عڪس و نام گروه
+*تنظیم عڪس باعث قفل شدن عڪس گروه میشود
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+📤 ترفیع [آیدی.ڪد.ریپلای]
+اضافه ڪردن مدیر به گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🏳 پاک کردن [قوانین/لیست مدیران/توضیحات]
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+📥 تنزل [آیدی.ڪد.ریپلای]
+حذف یڪ مدیـــــر
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+📮 تنظیم [قوانین/توضیحات] (متن)
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🔒 قفل [همه/استیکر/اسم/ورود/اسپم/فارسی/تبلیغ/انگلیسی/فحش/تگ/خروج/ربات]
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🔓 باز کردن [همه/استیکر/اسم/ورود/عکس/اسپم/فارسی/تبلیغ/انگلیسی/فحش/تگ/خروج/ربات]
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+☠ حساسیت [5-20]
+تنظیم محدودیت اسپم
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+⚙ تنظیمات
+مشاهده تنظیمات گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+👥 لیست مدیران
+لیست مدیران گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+⛓ لینک
+ارسال لینک در گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🔵 لینک جدید
+ساخت لینک جدید برای گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+💬 لینک خصوصی
+ارسال لینک در پیوی
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🎰 ماشین حساب (عدد+*/-عدد)
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+☝️ اخراج غیرفعال
+اخراج کردن غیر فعال ها
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+💡 ایدی :
+فقط با ریپلی میتوانید از این دستور استفاده کنید
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🚪خروج
+ترڪ ڪردن گروه
+∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─∙─
+🤖 !antibot روشن/خاموش
+antibot = قفل ربات
+●•••••••••••••••••••••••••●
+❗️Note that: از ! و / استفاده نکنید
+شما میتوانید با دستور مدیرو بیار، ادمین ربات رو اد کنید
+اخطار: بدون دلیل از این دستور استفاده نکنید
+●•••••••••••••••••••••••••●
+Developers: 
+@janlou
+@amiraliiiiiiiii81
+@bestroid_admin
 ]],
 	help_text_super =[[
 SuperGroup Commands:
