@@ -1,3 +1,7 @@
+--Created by: @janlou & @Alirezame
+--Powered by: @SUDO_TM & @AdvanTM
+--⚠️CopyRight all right reserved⚠️
+
 local function saveplug(extra, success, result)
   local msg = extra.msg
   local name = extra.name
@@ -20,7 +24,10 @@ local function run(msg,matches)
       if matches[1] == "save" and matches[2] and is_sudo(msg) then
 load_document(msg.reply_id, saveplug, {msg=msg,name=name})
         return 'Plugin '..name..' has been saved.'
-    end
+      end
+        if not is_sudo(msg) then
+          return "Only for sudo!"
+        end
 end
 end
 return {
@@ -29,3 +36,7 @@ return {
   },
   run = run,
 }
+
+--Created by: @janlou & @Alirezame
+--Powered by: @SUDO_TM & @AdvanTM
+--⚠️CopyRight all right reserved⚠️
