@@ -3,3 +3,16 @@
 # <p align="center">شما میتوانید دستورات را در پلاگین ها تغییر دهید
 # <p align="center">👉 Bot: [@TeleAdvan](http://telegram.me/teleadvan)
 # <p align="center">👉 Channel: [@AdvanTM](http://telegram.me/AdvanTM)
+
+# <p align="right">آموزش نصب ربات:
+# <p align="right">کد های زیر را وارد ترمینال کنید
+#cd ..
+#git clone https://github.com/janlou/AdvanSource
+#sudo apt-get update
+#sudo apt-get upgrade
+#
+#sudo apt-get install libreadline-dev libconfig-dev libssl-dev lua5.2 liblua5.2-dev libevent-dev make unzip git redis-server g++ libjansson-dev libpython-dev expat libexpat1-dev
+
+#chmod +x advan.sh
+#./advan.sh install
+#./advan.sh
