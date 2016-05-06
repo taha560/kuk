@@ -172,6 +172,17 @@ function is_sudo(msg)
   return var
 end
 
+function is_admin(msg)
+  local var = false
+  -- Check users id in config
+  for v,user in pairs(_config.sudo_users) do
+    if user == msg.from.id then
+      var = true
+    end
+  end
+  return var
+end
+
 -- Returns the name of the sender
 function get_name(msg)
   local name = msg.from.first_name
