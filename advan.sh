@@ -111,6 +111,14 @@ else
     echo "Run $0 install"
     exit 1
   fi
-
+  
+   echo -e "\033[38;5;208m"
+   echo -e "     ___    ____ __    __ ___    _   _        "
+   echo -e "    / _ \  |  _ \\ \  / // _ \  | \  ||       "
+   echo -e "   / /_\ \ | |_| |\ \/ // /_\ \ ||\\_||       "
+   echo -e "  /_/   \_\|____/  \__//_/   \_\|| \__|       "
+   echo -e "                                              \033[0;00m"
+   echo -e "\e[36m"
+   
   ./tg/bin/telegram-cli -k ./tg/tg-server.pub -s ./bot/teleadvan.lua -l 1 -E $@
 fi
