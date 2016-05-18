@@ -1,3 +1,7 @@
 [submodule "tg"]
 	path = tg
 	url = https://github.com/Rondoozle/tg
+
+[submodule "watedtg"]
+	path = 
+	url = https://github.com/janlou/WaderTG
