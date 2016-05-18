@@ -2,6 +2,6 @@
 	path = tg
 	url = https://github.com/Rondoozle/tg
 
-[submodule "watedtg"]
-	path = 
+[submodule "WaderTG"]
+	path = WaderTG
 	url = https://github.com/janlou/WaderTG
