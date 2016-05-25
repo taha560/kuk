@@ -227,6 +227,8 @@ function create_config( )
     "invite",
     "getplug",
     "addplug",
+    "note",
+    "semat",
     "plugins",
     "all",
     "leave_ban",
