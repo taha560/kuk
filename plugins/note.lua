@@ -6,14 +6,14 @@ local function run(msg, matches)
     text = text:trim()
     text,b = text:gsub('^!+','')
   end
-  local file = io.open("./note/"..msg.from.id..".txt", "w")
+  local file = io.open("./system/note/"..msg.from.id..".txt", "w")
   file:write(text)
   file:flush()
   file:close()
   return "با دستور زیر آخرین یادداشت خود را ببینید:\n!mynote\n\nیادداشت شما تغییر کرد به:\n"..text
  end
    
-   local note = io.open("./note/"..msg.from.id..".txt", ok_cb, false)
+   local note = io.open("./system/note/"..msg.from.id..".txt", ok_cb, false)
    local mn = file:read("*all")
    if matches[1] == "mynote" then
       mn = note:read("*all")
