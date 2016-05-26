@@ -7,23 +7,23 @@ local function pre_process(msg)
     -- Check if banned user joins chat by link
     if action == 'chat_add_user_link' then
       local user_id = msg.from.id
-      print('در حال بررسی شخص دعوت شده '..user_id)
+      print('Checking invited user '..user_id)
       local banned = is_banned(user_id, msg.to.id)
       if banned or is_gbanned(user_id) then -- Check it with redis
-      print('این فرد بن شده است')
+      print('User is banned!')
       local print_name = user_print_name(msg.from):gsub("‮", "")
 	  local name = print_name:gsub("_", "")
-      savelog(msg.to.id, name.." ["..msg.from.id.."] کیک و بن شده است ")-- Save to logs
+      savelog(msg.to.id, name.." ["..msg.from.id.."] is banned and kicked ! ")-- Save to logs
       kick_user(user_id, msg.to.id)
       end
     end
     -- Check if banned user joins chat
     if action == 'chat_add_user' then
       local user_id = msg.action.user.id
-      print('در حال بررسی شخص دعوت شده '..user_id)
+      print('Checking invited user '..user_id)
       local banned = is_banned(user_id, msg.to.id)
       if banned and not is_momod2(msg.from.id, msg.to.id) or is_gbanned(user_id) and not is_admin2(msg.from.id) then -- Check it with redis
-        print('این فرد بن شده است')
+        print('User is banned!')
       local print_name = user_print_name(msg.from):gsub("‮", "")
 	  local name = print_name:gsub("_", "")
         savelog(msg.to.id, name.." ["..msg.from.id.."] added a banned user >"..msg.action.user.id)-- Save to logs
@@ -94,67 +94,67 @@ local function kick_ban_res(extra, success, result)
 		receiver = 'channel#id'..chat_id
 	  end
 	  if success == 0 then
-		return send_large_msg(receiver, "جستجو نتیجه ای نداشت!")
+		return send_large_msg(receiver, "Cannot find user by that username!")
 	  end
       local member_id = result.peer_id
       local user_id = member_id
       local member = result.username
 	  local from_id = extra.from_id
       local get_cmd = extra.get_cmd
-       if get_cmd == "اخراج" then
+       if get_cmd == "kick" then
          if member_id == from_id then
-            send_large_msg(receiver, "شما نمیتوانید خود را اخراج کنید")
+            send_large_msg(receiver, "You can't kick yourself")
 			return
          end
          if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-            send_large_msg(receiver, "شما نمیتوانید این فرد را اخراج کنید")
+            send_large_msg(receiver, "You can't kick mods/owner/admins")
 			return
          end
 		 kick_user(member_id, chat_id)
-      elseif get_cmd == 'بن' then
+      elseif get_cmd == 'ban' then
         if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-			send_large_msg(receiver, "شما نمیتوانید این فرد را بن کنید")
+			send_large_msg(receiver, "You can't ban mods/owner/admins")
 			return
         end
-        send_large_msg(receiver, 'شخص @'..member..' ['..member_id..'] بن شد')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned')
 		ban_user(member_id, chat_id)
-      elseif get_cmd == 'حذف بن' then
-        send_large_msg(receiver, 'شخص @'..member..' ['..member_id..'] از بن خارج شد')
+      elseif get_cmd == 'unban' then
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
-      elseif get_cmd == 'سوپر بن' then
-        send_large_msg(receiver, 'شخص @'..member..' ['..member_id..'] سوپر بن شد')
+      elseif get_cmd == 'banall' then
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned')
 		banall_user(member_id)
-      elseif get_cmd == 'حذف سوپر بن' then
-        send_large_msg(receiver, 'شخص @'..member..' ['..member_id..'] از سوپر بن خارج شد')
+      elseif get_cmd == 'unbanall' then
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally unbanned')
 	    unbanall_user(member_id)
     end
 end
 
 local function run(msg, matches)
 local support_id = msg.from.id
- if matches[1]:lower() == 'آیدی' and msg.to.type == "chat" or msg.to.type == "user" then
+ if matches[1]:lower() == 'id' and msg.to.type == "chat" or msg.to.type == "user" then
     if msg.to.type == "user" then
-      return "Bot ID: "..msg.to.id.. "\n\nآیدی شما: "..msg.from.id
+      return "WaderTG #ID: "..msg.to.id.. "\n\nYour #ID: "..msg.from.id
     end
     if type(msg.reply_id) ~= "nil" then
       local print_name = user_print_name(msg.from):gsub("‮", "")
 	  local name = print_name:gsub("_", "")
         savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
         id = get_message(msg.reply_id,get_message_callback_id, false)
-    elseif matches[1]:lower() == 'آیدی' then
+    elseif matches[1]:lower() == 'id' then
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
       return "Group ID for " ..string.gsub(msg.to.print_name, "_", " ").. ":\n\n"..msg.to.id
     end
   end
-  if matches[1]:lower() == 'خروج' and msg.to.type == "chat" then-- خروج
+  if matches[1]:lower() == 'kickme' and msg.to.type == "chat" then-- /kickme
   local receiver = get_receiver(msg)
     if msg.to.type == 'chat' then
       local print_name = user_print_name(msg.from):gsub("‮", "")
 	  local name = print_name:gsub("_", "")
-      savelog(msg.to.id, name.." ["..msg.from.id.."] خارج شد ")-- Save to logs
+      savelog(msg.to.id, name.." ["..msg.from.id.."] left using kickme ")-- Save to logs
       chat_del_user("chat#id"..msg.to.id, "user#id"..msg.from.id, ok_cb, false)
     end
   end
@@ -163,14 +163,14 @@ local support_id = msg.from.id
     return
   end
 
-  if matches[1]:lower() == "لیست بن" then -- Ban list !
+  if matches[1]:lower() == "banlist" then -- Ban list !
     local chat_id = msg.to.id
     if matches[2] and is_admin1(msg) then
       chat_id = matches[2]
     end
     return ban_list(chat_id)
   end
-  if matches[1]:lower() == 'بن' then-- /ban
+  if matches[1]:lower() == 'ban' then-- /ban
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       if is_admin1(msg) then
 		msgr = get_message(msg.reply_id,ban_by_reply_admins, false)
@@ -184,21 +184,21 @@ local support_id = msg.from.id
          	return
         end
         if not is_admin1(msg) and is_momod2(matches[2], msg.to.id) then
-          	return "شما نمیتوانید این فرد را بن کنید"
+          	return "you can't ban mods/owner/admins"
         end
         if tonumber(matches[2]) == tonumber(msg.from.id) then
-          	return "شما نمیتوانید خود را بن کنید"
+          	return "You can't ban your self !"
         end
         local print_name = user_print_name(msg.from):gsub("‮", "")
 	    local name = print_name:gsub("_", "")
 		local receiver = get_receiver(msg)
         savelog(msg.to.id, name.." ["..msg.from.id.."] baned user ".. matches[2])
         ban_user(matches[2], msg.to.id)
-		send_large_msg(receiver, 'User ['..matches[2]..'] بن شد')
+		send_large_msg(receiver, 'User ['..matches[2]..'] banned')
       else
 		local cbres_extra = {
 		chat_id = msg.to.id,
-		get_cmd = 'بن',
+		get_cmd = 'ban',
 		from_id = msg.from.id,
 		chat_type = msg.to.type
 		}
@@ -208,7 +208,7 @@ local support_id = msg.from.id
   end
 
 
-  if matches[1]:lower() == 'حذف بن' then -- /unban
+  if matches[1]:lower() == 'unban' then -- /unban
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       local msgr = get_message(msg.reply_id,unban_by_reply, false)
     end
@@ -217,16 +217,16 @@ local support_id = msg.from.id
       local targetuser = matches[2]
       if string.match(targetuser, '^%d+$') then
         	local user_id = targetuser
-        	local hash =  'بن شد:'..chat_id
+        	local hash =  'banned:'..chat_id
         	redis:srem(hash, user_id)
         	local print_name = user_print_name(msg.from):gsub("‮", "")
 			local name = print_name:gsub("_", "")
         	savelog(msg.to.id, name.." ["..msg.from.id.."] unbaned user ".. matches[2])
-        	return 'شخص '..user_id..' آنبن شد'
+        	return 'User '..user_id..' unbanned'
       else
 		local cbres_extra = {
 			chat_id = msg.to.id,
-			get_cmd = 'حذف بن',
+			get_cmd = 'unban',
 			from_id = msg.from.id,
 			chat_type = msg.to.type
 		}
@@ -235,7 +235,7 @@ local support_id = msg.from.id
 	end
  end
 
-if matches[1]:lower() == 'اخراج' then
+if matches[1]:lower() == 'kick' then
     if type(msg.reply_id)~="nil" and is_momod(msg) then
       if is_admin1(msg) then
         msgr = get_message(msg.reply_id,Kick_by_reply_admins, false)
@@ -262,7 +262,7 @@ if matches[1]:lower() == 'اخراج' then
 	else
 		local cbres_extra = {
 			chat_id = msg.to.id,
-			get_cmd = 'اخراج',
+			get_cmd = 'kick',
 			from_id = msg.from.id,
 			chat_type = msg.to.type
 		}
@@ -276,7 +276,7 @@ end
 		return
 	end
 
-  if matches[1]:lower() == 'سوپر بن' and is_admin1(msg) then -- Global ban
+  if matches[1]:lower() == 'banall' and is_admin1(msg) then -- Global ban
     if type(msg.reply_id) ~="nil" and is_admin1(msg) then
       banall = get_message(msg.reply_id,banall_by_reply, false)
     end
@@ -288,11 +288,11 @@ end
          	return false
         end
         	banall_user(targetuser)
-       		return 'شخص ['..user_id..' ] سوپر بن شد'
+       		return 'User ['..user_id..' ] globally banned'
      else
 	local cbres_extra = {
 		chat_id = msg.to.id,
-		get_cmd = 'سوپر بن',
+		get_cmd = 'banall',
 		from_id = msg.from.id,
 		chat_type = msg.to.type
 	}
@@ -300,7 +300,7 @@ end
 		resolve_username(username, kick_ban_res, cbres_extra)
       end
   end
-  if matches[1]:lower() == 'حذف سوپر بن' then -- Global unban
+  if matches[1]:lower() == 'unbanall' then -- Global unban
     local user_id = matches[2]
     local chat_id = msg.to.id
       if string.match(matches[2], '^%d+$') then
@@ -308,11 +308,11 @@ end
           	return false
         end
        		unbanall_user(user_id)
-        	return 'شخص ['..user_id..' ] حذف سوپر بن شد'
+        	return 'User ['..user_id..' ] globally unbanned'
     else
 		local cbres_extra = {
 			chat_id = msg.to.id,
-			get_cmd = 'حذف سوپر بن',
+			get_cmd = 'unbanall',
 			from_id = msg.from.id,
 			chat_type = msg.to.type
 		}
@@ -320,33 +320,30 @@ end
 		resolve_username(username, kick_ban_res, cbres_extra)
       end
   end
-  if matches[1]:lower() == "لیست سوپر بن" then -- Global ban list
+  if matches[1]:lower() == "gbanlist" then -- Global ban list
     return banall_list()
   end
 end
 
 return {
   patterns = {
-    "^(سوپر بن) (.*)$",
-    "^(سوپر بن)$",
-    "^(لیست بن) (.*)$",
-    "^(لیست بن)$",
-    "^(لیست سوپر بن)$",
-	"^(خروج)",
-    "^(اخراج)$",
-	"^(بن)$",
-    "^(بن) (.*)$",
-    "^(حذف بن) (.*)$",
-    "^(حذف سوپر بن) (.*)$",
-    "^(حذف سوپر بن)$",
-    "^(اخراج) (.*)$",
-    "^(حذف بن)$",
-    "^(آیدی)$",
+    "^[#!/]([Bb]anall) (.*)$",
+    "^[#!/]([Bb]anall)$",
+    "^[#!/]([Bb]anlist) (.*)$",
+    "^[#!/]([Bb]anlist)$",
+    "^[#!/]([Gg]banlist)$",
+	"^[#!/]([Kk]ickme)",
+    "^[#!/]([Kk]ick)$",
+	"^[#!/]([Bb]an)$",
+    "^[#!/]([Bb]an) (.*)$",
+    "^[#!/]([Uu]nban) (.*)$",
+    "^[#!/]([Uu]nbanall) (.*)$",
+    "^[#!/]([Uu]nbanall)$",
+    "^[#!/]([Kk]ick) (.*)$",
+    "^[#!/]([Uu]nban)$",
+    "^[#!/]([Ii]d)$",
     "^!!tgservice (.+)$"
   },
   run = run,
   pre_process = pre_process
 }
-
---persian lang by: @janlou
--- +supergp
