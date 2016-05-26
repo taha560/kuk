@@ -121,7 +121,7 @@ else
   
   while true; do
    rm -r ../.telegram-cli/state
-   ./tg/bin/telegram-cli -k ./tg/tg-server.pub -s ./bot/teleadvan.lua -l 1 -E $@
+   ./tg/bin/telegram-cli -k ./tg/tg-server.pub -s ./system/bot/teleadvan.lua -l 1 -E $@
    sleep 3
   done
 fi
