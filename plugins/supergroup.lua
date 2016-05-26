@@ -555,7 +555,7 @@ end
 		end
 	end
   local settings = data[tostring(target)]['settings']
-  local text = "SuperGroup settings:\nLock links : "..settings.lock_link.."\nLock flood: "..settings.flood.."\nFlood sensitivity : "..NUM_MSG_MAX.."\nLock spam: "..settings.lock_spam.."\nLock Arabic: "..settings.lock_arabic.."\nLock Member: "..settings.lock_member.."\nLock RTL: "..settings.lock_rtl.."\nLock Tgservice : "..settings.lock_tgservice.."\nLock sticker: "..settings.lock_sticker.."\nPublic: "..settings.public.."\nStrict settings: "..settings.strict
+  local text = "SuperGroup settings:\n\n==============\n#Lock links: "..settings.lock_link.."\n#Lock RTL: "..settings.lock_rtl.."\n#Lock flood: "..settings.flood.."\n#Lock spam: "..settings.lock_spam.."\n#Lock Arabic: "..settings.lock_arabic.."\n#Lock Member: "..settings.lock_member.."\n#Lock sticker: "..settings.lock_sticker.."\n#Lock contacts: "..settings.lock_contacts.."\n#Lock tgservice: "..settings.lock_tgservice.."\n#Flood sensitivity: "..NUM_MSG_MAX.."\n#Group Public: "..settings.public.."\n#Strict settings: "..settings.strict.."\n==============\n@WaderTGTeam"
   return text
 end
 
@@ -1073,7 +1073,7 @@ local function set_supergroup_photo(msg, success, result)
   end
   local receiver = get_receiver(msg)
   if success then
-    local file = 'system/photos/channel_photo_'..msg.to.id..'.jpg'
+    local file = 'data/photos/channel_photo_'..msg.to.id..'.jpg'
     print('File downloaded to:', result)
     os.rename(result, file)
     print('File moved to:', file)
@@ -1949,15 +1949,6 @@ local function run(msg, matches)
 			return get_rules(msg, data)
 		end
 
-		if matches[1] == 'help' and not is_owner(msg) then
-			text = "Message /superhelp to @Teleseed in private for SuperGroup help"
-			reply_msg(msg.id, text, ok_cb, false)
-		elseif matches[1] == 'help' and is_owner(msg) then
-			local name_log = user_print_name(msg.from)
-			savelog(msg.to.id, name_log.." ["..msg.from.id.."] Used /superhelp")
-			return super_help()
-		end
-
 		if matches[1] == 'peer_id' and is_admin1(msg)then
 			text = msg.to.peer_id
 			reply_msg(msg.id, text, ok_cb, false)
@@ -2065,7 +2056,6 @@ return {
 	"^[#!/]([Rr]ules)$",
 	"^[#!/]([Ss]etflood) (%d+)$",
 	"^[#!/]([Cc]lean) (.*)$",
-	"^[#!/]([Hh]elp)$",
 	"^[#!/]([Mm]uteslist)$",
 	"^[#!/]([Mm]utelist)$",
     "[#!/](mp) (.*)",
