@@ -6,7 +6,7 @@ local function run(msg, matches)
     text = text:trim()
     text,b = text:gsub('^!+','')
   end
-  local file = io.open("./system/note/"..msg.from.id..".txt", "w")
+  local file = io.open("./adv/note/"..msg.from.id..".txt", "w")
   file:write(text)
   file:flush()
   file:close()
