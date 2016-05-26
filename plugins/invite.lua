@@ -5,11 +5,11 @@ local function callbackres(extra, success, result)
 	local chat = 'chat#id'..extra.chatid
 	local channel = 'channel#id'..extra.chatid
 	if is_banned(result.id, extra.chatid) then 
-        send_large_msg(chat, 'این فرد بن شده است.')
-        send_large_msg(channel, 'این فرد بن شده است.')
+        send_large_msg(chat, 'User is banned.')
+        send_large_msg(channel, 'User is banned.')
 	elseif is_gbanned(result.id) then
-	    send_large_msg(chat, 'این فرد سوپر بن شده است.')
-		send_large_msg(channel, 'این فرد سوپر بن شده است.')
+	    send_large_msg(chat, 'User is globaly banned.')
+		send_large_msg(channel, 'User is globaly banned.')
 	else    
 	    chat_add_user(chat, user, ok_cb, false) 
 		channel_invite(channel, user, ok_cb, false)
@@ -21,11 +21,11 @@ function run(msg, matches)
 	return
   end
   if not is_admin1(msg) then -- For admins only !
-		return 'فقط برای مدیران!'
+		return 'Only admins can invite.'
   end
   if not is_realm(msg) then
     if data[tostring(msg.to.id)]['settings']['lock_member'] == 'yes' and not is_admin1(msg) then
-		  return 'این گروه شخصی است'
+		  return 'Group is private.'
     end
   end
 	if msg.to.type ~= 'chat' or msg.to.type ~= 'channel' then 
@@ -37,11 +37,9 @@ function run(msg, matches)
 end
 return {
     patterns = {
-      "^!invite (.*)$"
+      "^[#!/]invite (.*)$"
     },
     run = run
 }
 
 end
--- persian lang by: @janlou
--- +supergp
