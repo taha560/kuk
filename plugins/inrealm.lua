@@ -455,7 +455,7 @@ local function returnids(cb_extra, success, result)
 		    i = i + 1
 		end
     end
-	local file = io.open("./groups/lists/"..result.peer_id.."memberlist.txt", "w")
+	local file = io.open("./system/chats/lists/"..result.peer_id.."memberlist.txt", "w")
 	file:write(text)
 	file:flush()
 	file:close()
