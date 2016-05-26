@@ -2,19 +2,19 @@
 
 local function run(msg, matches)
   if matches[1]:lower() == 'semat' and not is_momod(msg) then
-     send_document(get_receiver(msg), "./system/semat/member.webp", ok_cb, false)
+     send_document(get_receiver(msg), "./adv/semat/member.webp", ok_cb, false)
     return 'You are a member'
   end
    if matches[1]:lower() == 'semat' and is_sudo(msg) then
-     send_document(get_receiver(msg), "./system/semat/sudo.webp", ok_cb, false)
+     send_document(get_receiver(msg), "./adv/semat/sudo.webp", ok_cb, false)
     return 'You are my sudo'
    end
     if matches[1]:lower() == 'semat' and is_owner(msg) then
-     send_document(get_receiver(msg), "./system/semat/owner.webp", ok_cb, false)
+     send_document(get_receiver(msg), "./adv/semat/owner.webp", ok_cb, false)
     return 'You are a owner'
    end
   if matches[1]:lower() == 'semat' and is_momod(msg) then
-     send_document(get_receiver(msg), "./system/semat/momod.webp", ok_cb, false)
+     send_document(get_receiver(msg), "./adv/semat/momod.webp", ok_cb, false)
     return 'You are a admin'
   end
 end
